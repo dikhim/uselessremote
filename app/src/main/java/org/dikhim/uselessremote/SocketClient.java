@@ -40,7 +40,6 @@ public class SocketClient implements Serializable {
     public void setRemoteAddress(String remoteAddress) {
         this.remoteAddress = remoteAddress;
         changed();
-
     }
 
 
@@ -70,16 +69,19 @@ public class SocketClient implements Serializable {
                     restart();
                 }
                 if (sendRequest("hi").equals("hi")) {
-                    // OK
+                    Log.d("ClientThread","Connected:");
                 } else {
                     try {
                         createSocket(remoteAddress, remotePort);
                         available = true;
-                        response("Connected to " + remoteAddress + ":" + remotePort);
+                        String msg = "Connected to " + remoteAddress + ":" + remotePort;
+                        Log.d("ClientThread", msg);
+                        response(msg);
                     } catch (IOException e) {
-                        Log.e("ClientThread", "IOException");
+                        String msg = "Couldn't connect to " + remoteAddress + ":" + remotePort;
+                        Log.d("ClientThread", msg);
                         available = false;
-                        response("Couldn't connect to " + remoteAddress + ":" + remotePort);
+                        response(msg);
                     }
                 }
             }

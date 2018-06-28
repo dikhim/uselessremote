@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        Log.d("MainActivity", "onCreate");
         super.onCreate(savedInstanceState);
         mainActivity = this;
         setContentView(R.layout.activity_main);
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("MainActivity", "onCreateOptionsMenu");
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -72,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("MainActivity", "onOptionsItemSelected");
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -89,17 +94,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("main", "onPause");
+        Log.d("MainActivity", "onPause");
         socketClient.stop();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("main", "onResume");
+        Log.e("MainActivity", "onResume");
         socketClient.start();
     }
-
 
 
     @SuppressWarnings("SameParameterValue")
@@ -280,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initPortEditText() {
-
         txtPort = findViewById(R.id.txtPort);
         txtPort.setText(String.valueOf(mainActivity.getPreferences(MODE_PRIVATE).getInt("hostPort", 5000)));
         txtPort.addTextChangedListener(new TextWatcher() {
@@ -291,7 +294,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                int port = Integer.parseInt(editable.toString());
+                int port;
+                try {
+                    port = Integer.parseInt(editable.toString());
+                } catch (NumberFormatException e) {
+                    return;
+                }
                 mainActivity.getPreferences(MODE_PRIVATE).
                         edit().putInt("hostPort", port).apply();
                 socketClient.setRemotePort(port);
@@ -308,18 +316,6 @@ public class MainActivity extends AppCompatActivity {
         String hostAddress = mainActivity.getPreferences(MODE_PRIVATE).getString("hostAddress", "192.168.1.2");
         int port = mainActivity.getPreferences(MODE_PRIVATE).getInt("hostPort", 5000);
         socketClient = new SocketClient(hostAddress, port, txtOut);
-
     }
 
-
-    private void restartSocketClient() {
-        if(socketClient==null)return;
-        Log.e("main", "restart method");
-        socketClient.stop();
-        String hostAddress = mainActivity.getPreferences(MODE_PRIVATE).getString("hostAddress", "192.168.1.2");
-        int port = mainActivity.getPreferences(MODE_PRIVATE).getInt("hostPort", 5000);
-        socketClient.setRemoteAddress(hostAddress);
-        socketClient.setRemotePort(port);
-        socketClient.start();
-    }
 }

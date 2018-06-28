@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.dikobraz.myapplication.org.dikhim.uselessremote.MainActivity"
+    tools:context="org.dikhim.uselessremote.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="address" />
+                android:text="@string/address" />
 
             <EditText
                 android:id="@+id/txtPort"
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="port" />
+                android:text="@string/port" />
         </LinearLayout>
 
         <TextView
@@ -43,8 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:editable="false"
-            android:text="Connected to 1123.456.789.000:99999" />
+            android:text="@string/logInfor" />
 
         <ImageView
             android:id="@+id/pad"
@@ -66,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:height="150dp"
-                android:text="Left" />
+                android:text="@string/left" />
 
             <Button
                 android:id="@+id/wheel"
@@ -74,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:height="150dp"
-                android:text="Wheel" />
+                android:text="@string/wheel" />
 
             <Button
                 android:id="@+id/right"
@@ -82,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:height="150dp"
-                android:text="Right" />
+                android:text="@string/right" />
         </LinearLayout>
 
     </LinearLayout>
